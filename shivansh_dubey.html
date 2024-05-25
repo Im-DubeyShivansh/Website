@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shivansh Dubey's Personal Page</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #00bcd4;
+            text-align: center;
+        }
+        .section {
+            margin: 60px 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .section.visible {
+            opacity: 1;
+        }
+        .profile-pic {
+            display: block;
+            margin: 20px auto;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .animated {
+            animation-duration: 1.5s;
+            animation-fill-mode: both;
+        }
+        .fadeIn {
+            animation-name: fadeIn;
+        }
+        .flip {
+            animation-name: flip;
+        }
+        .drop {
+            animation-name: drop;
+        }
+        .slideIn {
+            animation-name: slideIn;
+        }
+        .spin {
+            animation-name: spin;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes flip {
+            from { transform: rotateY(90deg); opacity: 0; }
+            to { transform: rotateY(0deg); opacity: 1; }
+        }
+        @keyframes drop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); opacity: 0; }
+            to { transform: rotate(360deg); opacity: 1; }
+        }
+        .age-display {
+            font-size: 1.2em;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="animated fadeIn">Shivansh Dubey</h1>
+        <img src="https://i.imgur.com/wn8K4Vp.jpg" alt="Shivansh Dubey" class="profile-pic animated spin">
+
+        <div class="section animated flip">
+            <h2>About Me</h2>
+            <p>I am an aspiring space scientist with a deep passion for science and space. I was born on May 16, 2007, in Varanasi. My dream is to become a space scientist and contribute to humanity's understanding of the cosmos.</p>
+            <div class="age-display" id="ageDisplay"></div>
+        </div>
+
+        <div class="section animated drop">
+            <h2>My Education</h2>
+            <p>Nursery to 3rd Grade: Subhasji Patil English School</p>
+            <p>4th to 8th Grade: Anand Shala</p>
+            <p>9th to 10th Grade: HLP High School</p>
+            <p>10th Grade Result: <span id="result"></span></p>
+            <p>Highest Subject Marks: <span id="subjectMarks"></span></p>
+        </div>
+
+        <div class="section animated slideIn">
+            <h2>Family</h2>
+            <p>Mother: Kiran Dubey</p>
+            <p>Father: Amresh Dubey</p>
+            <p>Brother: Shashank Dubey (Born on November 7, 2008)</p>
+        </div>
+
+        <div class="section animated flip">
+            <h2>Interests</h2>
+            <p>Favorite Anime: Doraemon</p>
+            <p>I rarely watch movies but enjoy listening to music.</p>
+            <p>Best Friend: Aniket</p>
+            <p>I know a little Python programming.</p>
+        </div>
+
+        <div class="section animated drop">
+            <h2>Contact Information</h2>
+            <p>Phone: <a href="tel:+917897652159">+91 7897652159</a></p>
+            <p>Email: <a href="mailto:dubeyshivanshameresh@gmail.com">dubeyshivanshameresh@gmail.com</a></p>
+        </div>
+
+        <div class="section animated slideIn">
+            <h2>Follow Me on Social Media</h2>
+            <p>Instagram: <a href="https://www.instagram.com/shivansh_realone/" target="_blank">@shivansh_realone</a></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateAge(birthdate) {
+            const now = new Date();
+            const birth = new Date(birthdate);
+            const ageInMilliseconds = now - birth;
+            const millisecondsInYear = 1000 * 60 * 60 * 24 * 365.25;
+            const years = Math.floor(ageInMilliseconds / millisecondsInYear);
+            const months = Math.floor((ageInMilliseconds % millisecondsInYear) / (1000 * 60 * 60 * 24 * 30.44));
+            const days = Math.floor((ageInMilliseconds % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((ageInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((ageInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((ageInMilliseconds % (1000 * 60)) / 1000);
+
+            return `${years} years, ${months} months, ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+        }
+
+        function updateAge() {
+            const birthdate = '2007-05-16T00:00:00';
+            const ageDisplay = document.getElementById('ageDisplay');
+            ageDisplay.textContent = calculateAge(birthdate);
+        }
+
+        function checkVisibility() {
+            const sections = document.querySelectorAll('.section');
+            const triggerBottom = window.innerHeight / 5 * 4;
+
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+
+                if (sectionTop < triggerBottom) {
+                    section.classList.add('visible');
+                } else {
+                    section.classList.remove('visible');
+                }
+            });
+        }
+
+        setInterval(updateAge, 1000);
+        window.addEventListener('scroll', checkVisibility);
+        window.addEventListener('load', checkVisibility);
+    </script>
+</body>
+</html>
